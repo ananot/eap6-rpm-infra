@@ -13,10 +13,9 @@ readonly SPECS_FOLDER=${SPECS_FOLDER:-'./SPECS'}
 
 # Internal global variables
 
-# readonly BUILDROOT="${HOME}/rpmbuild/BUILDROOT"     # only required if running on "older" system (RHEL5)
+# readonly BUILDROOT="--buildroot ${HOME}/rpmbuild/BUILDROOT"     # only required if running on "older" system (RHEL5)
 readonly RPMBUILD_CMD=${RPMBUILD_CMD:-'rpmbuild'}
 readonly RSYNC_CMD=${RSYNC_CMD:-'rsync'}
-readonly LSB_RELEASE_CMD=${LSB_RELEASE_CMD:-'lsb_release'}
 
 usage() {
   echo "TODO"
@@ -75,30 +74,14 @@ prepare_and_build_rpm() {
 build_rpm() {
   local spec_fullpath=${1}
 
-  if [ $(basename ${spec_fullpath}) = "jdg.spec" ]; then
-    set +e
-    "${LSB_RELEASE_CMD}" -i | grep -q 'RedHatEnterpriseServer'
-    isRHEL=${?}
-    "${LSB_RELEASE_CMD}" -r | cut -d: -f2 | sed -e 's/^ *//' | grep -e '^[45]\.' -q
-    isEarlierThanSix=${?}
-    set +e
-    # --buildroot ${BUILDROOT} > /dev/null 2> /dev/null
-    if [[ "${isRHEL}" -ne 0 && "${isEarlierThanSix}" -ne 0 ]]; then
-        export BUILDROOT_OPT="--buildroot ${BUILDROOT}"
-    fi
-  else
-      export BUILDROOT_OPT=""
-  fi
-
   echo -n "Building RPM from ${spec_fullpath} ... "
-  ${RPMBUILD_CMD} '-bb' "${spec_fullpath}" "${BUILDROOT_OPT}" > /dev/null 2> /dev/null
+  ${RPMBUILD_CMD} '-bb' "${spec_fullpath}" "${BUILDROOT}" > /dev/null 2> /dev/null
   echo 'Done.'
 
 }
 
 sanity_check ${RPMBUILD_CMD}
 sanity_check ${RSYNC_CMD}
-sanity_check ${LSB_RELEASE_CMD}
 
 if [ -z ${JDG_REPOSITORY} ]; then
   echo "Variable JDG_REPOSITORY not set."
