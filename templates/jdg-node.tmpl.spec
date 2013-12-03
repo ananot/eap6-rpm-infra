@@ -32,7 +32,20 @@ sed -e "s;\(export NODE_ID=\).*$;\1'%{node_id}';g" \
     -e "s;\(export JBOSS_HOME=\).*$;\1'%{jdg_home}';g" \
     -e "s;\(export JBOSS_USER=\).*$;\1'%{username}';g" \
     %{jdg_home}/bin/init.d/jboss-as.conf > /etc/jdg/node-%{node_id}.conf
-ln -s %{jdg_home}/bin/init.d/jdg /etc/init.d/jdg-node-%{node_id}
+
+%define service_name /etc/init.d/jdg-node-%{node_id}
+if [ ! -L %{service_name} ]; then
+  ln -s %{jdg_home}/bin/init.d/jdg %{service_name}
+fi
+
+%define jdg_data_dir /var/run/jdg/node-%{node_id}
+mkdir -p %{jdg_data_dir}
+chown -R %{username}:%{username} %{jdg_data_dir}
+
+%define link_to_configuration /etc/jdg/configuration
+if [ ! -L %{link_to_configuration} ]; then
+  ln -s %{jdg_home}/standalone/configuration/ %{link_to_configuration}
+fi
 
 %clean
 exit 0
