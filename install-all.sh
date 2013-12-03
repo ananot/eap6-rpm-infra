@@ -20,7 +20,7 @@ fi
 
 if [ -z "${NO_INSTALL}" ]; then
   echo -n 'Installing new packages... '
-  readonly RPMS_DIR='RPMS/noarch/'
+  readonly RPMS_DIR=${RPMS_DIR:-'RPMS/noarch/'}
   readonly RPMS_LIST='jdg-6.1-1.fc18.noarch.rpm
   jdg-node1-1.0-1.fc18.noarch.rpm
   jdg-node2-1.0-1.fc18.noarch.rpm
