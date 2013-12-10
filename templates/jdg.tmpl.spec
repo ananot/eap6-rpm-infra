@@ -17,7 +17,7 @@ URL:        http://access.redhat.com/
 Packager:   Romain Pelisse
 BuildArch:  noarch
 
-Requires(pre): shadow-utils
+Requires(pre): java, shadow-utils
 
 %pre
 mkdir -p %{jdg_home}
