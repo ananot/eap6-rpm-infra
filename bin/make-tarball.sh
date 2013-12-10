@@ -7,10 +7,12 @@
 readonly JDG_REPOSITORY=${JDG_REPOSITORY}
 readonly JON_REPOSITORY=${JON_REPOSITORY}
 
-readonly JDG_BUILDROOT=${JDG_BUILDROOT:-"./BUILDROOT/jdg-6.1-0.fc18.x86_64/opt/jboss/jboss-datagrid-6.1"}
-readonly JON_BUILDROOT=${JON_BUILDROOT:-"./BUILDROOT/jon-6.1-1.fc18.x86_64/opt/jboss/jboss-operation-network-3.1.2"}
+readonly JDG_TARBALL_NAME=${JDG_TARBALL_NAME:-'jdg-6.1.tgz'}
+readonly JON_TARBALL_NAME=${JON_TARBALL_NAME:-'jon-3.1.2.tgz'}
 
-readonly RSYNC_CMD=${RSYNC_CMD:-'rsync'}
+readonly SOURCES_FOLDER=${SOURCES_FOLDER:-'SOURCES'}
+
+readonly TAR_CMD=${TAR_CMD:-'tar'}
 
 usage() {
   echo "TODO"
@@ -28,7 +30,7 @@ sanity_check() {
   fi
 }
 
-sync_src() {
+make_tarball() {
   local src=${1}
   local target=${2}
   local name=${3}
@@ -43,20 +45,18 @@ sync_src() {
     fi
 
     if [ ! -e "${src}" ]; then
-      echo "Source folder ${src} does not exist, skipping sync... Done."
+      echo "Source folder ${src} does not exist, skipping tarball... Done."
+      exit 2
     else
-      mkdir -p "${target}"
-
-      echo -n "Syncing from ${src} to ${2} ... "
-      ${RSYNC_CMD} -Arvcz ${src}/* "${target}" > /dev/null
+      echo -n "Tarball from ${src} to ${2} ... "
+      ${TAR_CMD} -cvzf "${target}" ${src}/* > /dev/null
       echo 'Done.'
     fi
   fi
 }
 
+sanity_check ${TAR_CMD}
 set -e
-sanity_check ${RSYNC_CMD}
 
-sync_src "${JDG_REPOSITORY}" "${JDG_BUILDROOT}" 'JDG'
+make_tarball "${JDG_REPOSITORY}" "${SOURCES_FOLDER}/${JDG_TARBALL_NAME}"
 echo ''
-sync_src "${JON_REPOSITORY}" "${JON_BUILDROOT}" 'JON'

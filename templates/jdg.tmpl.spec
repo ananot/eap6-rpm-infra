@@ -14,10 +14,12 @@ Group:      Administration
 License:	GPL
 URL:        http://access.redhat.com/
 
+Patch0:     jboss-as-standalone.sh.patch
+
 Packager:   Romain Pelisse
 BuildArch:  noarch
 
-Requires(pre): java, shadow-utils
+Requires(pre): java
 
 %pre
 mkdir -p %{jdg_home}
@@ -27,7 +29,11 @@ getent passwd %{username}  > /dev/null || \
     -c "JBoss Data Grid (JDG) user account" %{username}
 exit 0
 
+
+%patch0 -p1
+
 %post
+
 
 %clean
 exit 0
