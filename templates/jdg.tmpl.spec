@@ -7,7 +7,7 @@
 
 Name:	    jdg
 Version:	%{jdg_version}
-Release:	1%{?dist}
+Release:	0%{?dist}
 Summary:    Packaging of Red Hat JBoss Data Grid, install required binary files.
 
 Group:      Administration
