@@ -21,10 +21,10 @@ Requires(pre): java, shadow-utils
 
 %pre
 mkdir -p %{jdg_home}
-getent group %{group} >/dev/null || groupadd -r %{group}
-getent passwd %{username}  >/dev/null || \
+getent group %{group} > /dev/null || groupadd -r %{group}
+getent passwd %{username}  > /dev/null || \
     useradd -r -g %{group} -d %{jdg_home} -s /sbin/nologin \
-        -c "JBoss Data Grid (JDG) user account" %{username}
+    -c "JBoss Data Grid (JDG) user account" %{username}
 exit 0
 
 %post
