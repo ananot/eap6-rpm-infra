@@ -20,7 +20,7 @@ URL:        http://access.redhat.com/
 Packager:   Romain Pelisse
 BuildArch:  noarch
 
-Requires(pre): shadow-utils, jdg
+Requires(pre): jdg
 
 %pre
 exit 0
