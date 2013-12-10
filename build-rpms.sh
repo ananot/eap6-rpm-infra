@@ -13,7 +13,6 @@ readonly SPECS_FOLDER=${SPECS_FOLDER:-'./SPECS'}
 
 # Internal global variables
 
-# readonly BUILDROOT="--buildroot ${HOME}/rpmbuild/BUILDROOT"     # only required if running on "older" system (RHEL5)
 readonly RPMBUILD_CMD=${RPMBUILD_CMD:-'rpmbuild'}
 readonly RSYNC_CMD=${RSYNC_CMD:-'rsync'}
 
@@ -74,8 +73,8 @@ prepare_and_build_rpm() {
 build_rpm() {
   local spec_fullpath=${1}
 
-  echo -n "Building RPM from ${spec_fullpath} ... "
-  ${RPMBUILD_CMD} '-bb' "${spec_fullpath}" "${BUILDROOT}" > /dev/null 2> /dev/null
+  echo "Building RPM from ${spec_fullpath} ... "
+  ${RPMBUILD_CMD} '-bb' "${spec_fullpath}" > /dev/null 2> /dev/null
   echo 'Done.'
 
 }
