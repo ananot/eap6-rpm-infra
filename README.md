@@ -60,18 +60,12 @@ value you'll need to edit the 'jdg.properties' (or 'jon.properties for JON) file
 this is the case, please, disregard this step, and simply modify the jdg and jon spec's template to
 depends on those provided packages.
 
-In order for the spec file for JDG (and JON) to packages the file from those product, you'll need to
-run set the appropriate environment variable and the following script:
+In order for the spec file for JDG (and JON) to packages the file from those product, you'll need
+create tarball from the exploded ZIP files provided by Red Hat. An handy script has been provided to
+do so:
 
     $ export JDG_REPOSITORY=~/downloads/jboss-datagrid-6.1
-    $ ./bin/sync-src
-
-Depending on the system you are building on, you'll most likely also need to modify the source name,
-in the script:
-
-    $ export JDG_BUILDROOT='./BUILDROOT/jdg-6.1-0.fc18.x86_64/opt/jboss/jboss-datagrid-6.1'
-    $ export JDG_REPOSITORY=~/downloads/jboss-datagrid-6.1
-    $ ./bin/sync-src
+    $ ./bin/make-tarball
 
 The same variables must be set for JON. If the variables are not set, the script will just skip
 those synchronise.
