@@ -49,7 +49,10 @@ make_tarball() {
       exit 2
     else
       echo -n "Tarball from ${src} to ${2} ... "
-      ${TAR_CMD} -cvzf "${target}" ${src}/* > /dev/null
+      target_fullpath=$(pwd)/${target}
+      cd "${src}"
+      ${TAR_CMD} -cvzf "${target_fullpath}" * > /dev/null
+      cd -
       echo 'Done.'
     fi
   fi
