@@ -1,0 +1,34 @@
+diff --git a/bin/init.d/jboss-as-standalone.sh b/bin/init.d/jboss-as-standalone.sh
+index 7b91e90..06bec01 100755
+--- a/bin/init.d/jboss-as-standalone.sh
++++ b/bin/init.d/jboss-as-standalone.sh
+@@ -8,6 +8,11 @@
+ # pidfile: /var/run/jboss-as/jboss-as-standalone.pid
+ # config: /etc/jboss-as/jboss-as.conf
+
++readonly NODE_ID=$(basename ${0} | sed -e 's;^.*-\([0-9]*\);\1;')
++
++readonly JBOSS_CONF=${JBOSS_CONF:-"/etc/jdg/node-${NODE_ID}.conf"}
++export JBOSS_CONF
++
+ # Source function library.
+ . /etc/init.d/functions
+
+@@ -52,7 +57,7 @@ fi
+
+ JBOSS_SCRIPT=$JBOSS_HOME/bin/standalone.sh
+
+-prog='jboss-as'
++prog=${prog:-'jboss-as'}
+
+ CMD_PREFIX=''
+
+@@ -89,7 +94,7 @@ start() {
+     if [ -x /etc/rc.d/init.d/functions ]; then
+       daemon --user $JBOSS_USER LAUNCH_JBOSS_IN_BACKGROUND=1 JBOSS_PIDFILE=$JBOSS_PIDFILE $JBOSS_SCRIPT -c $JBOSS_CONFIG 2>&1 > $JBOSS_CONSOLE_LOG &
+     else
+-      su - $JBOSS_USER -c "LAUNCH_JBOSS_IN_BACKGROUND=1 JBOSS_PIDFILE=$JBOSS_PIDFILE $JBOSS_SCRIPT -c $JBOSS_CONFIG" 2>&1 > $JBOSS_CONSOLE_LOG &
++      su - $JBOSS_USER -c "LAUNCH_JBOSS_IN_BACKGROUND=1 JBOSS_PIDFILE=$JBOSS_PIDFILE JAVA_OPTS='$JAVA_OPTS' $JBOSS_SCRIPT -c $JBOSS_CONFIG" 2>&1 > $JBOSS_CONSOLE_LOG &
+     fi
+   fi
+
