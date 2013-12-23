@@ -35,7 +35,7 @@ sed -e "s;\(export NODE_ID=\).*$;\1'%{node_id}';g" \
 
 %define service_name /etc/init.d/jdg-node-%{node_id}
 if [ ! -L %{service_name} ]; then
-  ln -s %{jdg_home}/bin/init.d/jdg %{service_name}
+  ln -s %{jdg_home}/bin/init.d/jboss-as-standalone.sh %{service_name}
 fi
 
 %define jdg_data_dir /var/run/jdg/node-%{node_id}
