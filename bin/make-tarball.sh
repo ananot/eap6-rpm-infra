@@ -7,8 +7,8 @@
 readonly JDG_REPOSITORY=${JDG_REPOSITORY}
 readonly JON_REPOSITORY=${JON_REPOSITORY}
 
-readonly JDG_TARBALL_NAME=${JDG_TARBALL_NAME:-'jdg-6.1.tgz'}
-readonly JON_TARBALL_NAME=${JON_TARBALL_NAME:-'jon-3.1.2.tgz'}
+readonly JDG_TARBALL_NAME=${JDG_TARBALL_NAME:-'jdg-6.1'}
+readonly JON_TARBALL_NAME=${JON_TARBALL_NAME:-'jon-3.1.2'}
 
 readonly SOURCES_FOLDER=${SOURCES_FOLDER:-'SOURCES'}
 
@@ -50,9 +50,9 @@ make_tarball() {
     else
       echo -n "Tarball from ${src} to ${2} ... "
       target_fullpath=$(pwd)/${target}
-      cd "${src}"
-      ${TAR_CMD} -cvzf "${target_fullpath}" * > /dev/null
-      cd -
+      ln -s "${src}" "${name}"
+      ${TAR_CMD} -cvzf "${target}/${name}.tgz" ${name}/* > /dev/null
+      rm -f "${name}"
       echo 'Done.'
     fi
   fi
@@ -61,5 +61,4 @@ make_tarball() {
 sanity_check ${TAR_CMD}
 set -e
 
-make_tarball "${JDG_REPOSITORY}" "${SOURCES_FOLDER}/${JDG_TARBALL_NAME}"
-echo ''
+make_tarball "${JDG_REPOSITORY}" "${SOURCES_FOLDER}" "${JDG_TARBALL_NAME}"
