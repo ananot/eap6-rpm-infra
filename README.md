@@ -86,3 +86,7 @@ have also been provided:
 
     $ ./bin/build-all.sh
 
+TODO
+====
+
+* add support for JON local install, with either a local Postgresql instance or a remote
