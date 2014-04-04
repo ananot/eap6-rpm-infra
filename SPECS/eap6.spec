@@ -31,6 +31,7 @@ Requires(pre): java-1.6.0-openjdk
 
 %prep
 %setup -q
+%global _default_patch_fuzz 2
 %patch0 -p1
 %patch1 -p1
 
