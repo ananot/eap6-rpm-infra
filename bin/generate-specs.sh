@@ -29,6 +29,7 @@ generate_spec_files() {
   local spec_fullpath=${2}
 
   echo -n "- generate $(basename ${spec_fullpath}) based on template ${spec_tmpl}..."
+  mkdir -p $(dirname ${2})
   cp "${spec_tmpl}" "${spec_fullpath}"
   for line in $(cat ${JDG_PROPERTIES_FILE})
   do
