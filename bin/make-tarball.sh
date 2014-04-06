@@ -2,22 +2,13 @@
 #
 #
 
-# External global variables - can be tweak or overridden by user
-
-readonly JDG_REPOSITORY=${JDG_REPOSITORY}
-readonly JON_REPOSITORY=${JON_REPOSITORY}
-
-readonly JDG_TARBALL_NAME=${JDG_TARBALL_NAME:-'jdg-6.1'}
-readonly JON_TARBALL_NAME=${JON_TARBALL_NAME:-'jon-3.1.2'}
+readonly SOURCES_TO_TAR="${HOME}/jboss-eap-6.0.1/
+${HOME}/postgres/
+${HOME}/jboss-patches/"
 
 readonly SOURCES_FOLDER=${SOURCES_FOLDER:-'SOURCES'}
 
 readonly TAR_CMD=${TAR_CMD:-'tar'}
-
-usage() {
-  echo "TODO"
-  echo ''
-}
 
 sanity_check() {
   local cmd=${1}
@@ -32,8 +23,8 @@ sanity_check() {
 
 make_tarball() {
   local src=${1}
-  local target=${2}
-  local name=${3}
+  local name=${2}
+  local target=${3}
 
   if [ -z "${src}" ]; then
     echo "No source directory provided for ${name} - skipping... Done."
@@ -61,4 +52,7 @@ make_tarball() {
 sanity_check ${TAR_CMD}
 set -e
 
-make_tarball "${JDG_REPOSITORY}" "${SOURCES_FOLDER}" "${JDG_TARBALL_NAME}"
+for target in ${SOURCES_TO_TAR}
+do 
+  make_tarball "${target}" "$(basename ${target})" "${SOURCES_FOLDER}"
+done
