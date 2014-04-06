@@ -1,0 +1,26 @@
+diff --git a/modules/org/jboss/as/weld/main/module.xml b/modules/org/jboss/as/weld/main/module.xml
+index 69e57c8..ed2865d 100644
+--- a/modules/org/jboss/as/weld/main/module.xml
++++ b/modules/org/jboss/as/weld/main/module.xml
+@@ -41,7 +41,7 @@
+         <module name="javax.el.api" />
+         <module name="javax.ejb.api" />
+         <module name="javax.enterprise.api"/>
+-        <module name="javax.faces.api"/>
++        <module name="javax.faces.api" slot="1.2"/>
+         <module name="javax.interceptor.api"/>
+         <module name="javax.persistence.api"/>
+         <module name="javax.servlet.api"/>
+diff --git a/modules/org/jboss/weld/core/main/module.xml b/modules/org/jboss/weld/core/main/module.xml
+index 5feb3f2..b228ee2 100644
+--- a/modules/org/jboss/weld/core/main/module.xml
++++ b/modules/org/jboss/weld/core/main/module.xml
+@@ -40,7 +40,7 @@
+         <module name="javax.annotation.api"/>
+         <module name="javax.el.api" />
+         <module name="javax.enterprise.api"/>
+-        <module name="javax.faces.api"/>
++        <module name="javax.faces.api" slot="1.2"/>
+         <module name="javax.inject.api"/>
+         <module name="javax.interceptor.api"/>
+         <module name="javax.persistence.api"/>
