@@ -6,10 +6,10 @@ index 7b91e90..06bec01 100755
  # pidfile: /var/run/jboss-as/jboss-as-standalone.pid
  # config: /etc/jboss-as/jboss-as.conf
 
-+readonly NODE_ID=$(basename ${0} | sed -e 's;^.*-\([0-9]*\);\1;')
++#readonly NODE_ID=$(basename ${0} | sed -e 's;^.*-\([0-9]*\);\1;')
 +
-+readonly JBOSS_CONF=${JBOSS_CONF:-"/etc/jdg/node-${NODE_ID}.conf"}
-+export JBOSS_CONF
++#readonly JBOSS_CONF=${JBOSS_CONF:-"/etc/jdg/node-${NODE_ID}.conf"}
++#export JBOSS_CONF
 +
  # Source function library.
  . /etc/init.d/functions
