@@ -12,19 +12,19 @@ index 0bfc942..1a8b550 100644
 +export JBOSS_USER=XXX
 +export JBOSS_HOME=XXX
 +
-+export JBOSS_CONFIG='standalone.xml'
++export JBOSS_CONFIG='standalone-full.xml'
 +export RUN_CONF="${JBOSS_HOME}/standalone/configuration/${JBOSS_CONFIG}"
 +
-+export JAVA_OPTS="-Djboss.server.default.config=${JBOSS_CONFIG}"
++export JAVA_OPTS="${JAVA_OPTS} -Dorg.jboss.as.logging.per-deployment=false"
 +
-+export JBOSS_CONSOLE_LOG="/var/log/jboss-eap-${NODE_ID}-console.log"
-+export JBOSS_PIDFILE="/var/run/jboss-eap-${NODE_ID}.pid"
++
++
 +
 +export JAVA_OPTS="${JAVA_OPTS} -Xms1303m -Xmx1303m -XX:MaxPermSize=256m"
 +export JAVA_OPTS="${JAVA_OPTS} -Djava.net.preferIPv4Stack=true -Dorg.jboss.resolver.warning=true"
 +export JAVA_OPTS="${JAVA_OPTS} -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000"
 +export JAVA_OPTS="${JAVA_OPTS} -Djboss.modules.system.pkgs=$JBOSS_MODULES_SYSTEM_PKGS -Djava.awt.headless=true"
-+export JAVA_OPTS="${JAVA_OPTS} -Djboss.server.default.config=clustered.xml"
++
 +export JAVA_OPTS="${JAVA_OPTS} -Dsun.nio.ch.bugLevel=''"
 +
 +readonly prog_name="jboss-eap-${NODE_ID}"
@@ -34,7 +34,7 @@ index 0bfc942..1a8b550 100644
 +export JAVA_OPTS="${JAVA_OPTS} -Djboss.socket.binding.port-offset=${PORT_OFFSET}"
 +export JAVA_OPTS="${JAVA_OPTS} -Djboss.node.name=${hostname}-${prog_name}"
 +export JAVA_OPTS="${JAVA_OPTS} -Djboss.bind.address=${hostname}"
-+export JAVA_OPTS="${JAVA_OPTS} -Djboss.server.base.dir=/var/run/jdg/node-${NODE_ID}"
-+export JAVA_OPTS="${JAVA_OPTS} -Djboss.server.config.dir=/etc/jdg/configuration/"
++
++if [ -e /etc/jboss-as/app.conf ] ; then source /etc/jboss-as/app.conf ; fi
 +
 +export prog="${prog_name}"
