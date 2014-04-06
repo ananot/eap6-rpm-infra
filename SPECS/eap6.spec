@@ -22,18 +22,23 @@ Packager:   Romain Pelisse
 BuildArch:  noarch
 
 Source0:    %{product_name}-%{product_version}.tgz
+Source1:    postgres.tgz
+Source2:    jboss-patches.tgz
 
 Patch0:     jboss-as-standalone.sh.patch
 Patch1:     add-node-default-jvm-settings.patch
-
+Patch2:	    set-default-jsf-to-1.2.patch
 
 Requires(pre): java-1.6.0-openjdk
 
 %prep
-%setup -q
+%setup -q 
+%setup -q -D -T -b 1  
+%setup -q -D -T -b 2
 %global _default_patch_fuzz 2
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %pre
 mkdir -p %{product_home}
@@ -45,15 +50,18 @@ getent passwd %{username}  > /dev/null || \
 %install
 mkdir -p %{buildroot}/%{product_home}
 cp -rp %{_builddir}/%{name}-%{version}/* %{buildroot}/%{product_home}
+cp -rp %{_builddir}/postgres %{buildroot}/%{product_home}/modules/org/
+cp -rp %{_builddir}/jboss-patches/jboss-seam-int.jar \
+       %{buildroot}/%{product_home}/modules/org/jboss/integration/ext-content/main/bundled/jboss-seam-int.jar
 
 %post
 
-%define eap_conf_folder /etc/%{product_name}
+%define eap_conf_folder /etc/jboss-as/
 mkdir -p %{eap_conf_folder}
 sed -e "s;\(export NODE_ID=\).*$;\1'%{node_id}';g" \
     -e "s;\(export JBOSS_HOME=\).*$;\1'%{product_home}';g" \
     -e "s;\(export JBOSS_USER=\).*$;\1'%{username}';g" \
-    %{product_home}/bin/init.d/jboss-as.conf > %{eap_conf_folder}/node-%{node_id}.conf
+    %{product_home}/bin/init.d/jboss-as.conf > %{eap_conf_folder}/jboss-as.conf
 
 %define service_name /etc/init.d/%{product_name}-%{node_id}
 if [ ! -L %{service_name} ]; then
