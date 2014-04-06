@@ -2,7 +2,9 @@
 #
 #
 
-readonly SOURCES_TO_TAR="${HOME}/jboss-eap-6.0.1/
+readonly SOURCES_TO_TAR="${HOME}/jboss-webserver-2.0.1
+${HOME}/httpd-init-script
+${HOME}/jboss-eap-6.0.1/
 ${HOME}/postgres/
 ${HOME}/jboss-patches/"
 
