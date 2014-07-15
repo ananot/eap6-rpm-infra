@@ -3,3 +3,5 @@ BUILD
 BUILDROOT
 RPMS
 SRPMS
+# tmp files
+*.swp
